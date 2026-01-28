@@ -145,9 +145,9 @@ TextureImporter:
       name: Shot_2_0
       rect:
         serializedVersion: 2
-        x: 39
+        x: 24
         y: 0
-        width: 42
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -167,9 +167,9 @@ TextureImporter:
       name: Shot_2_1
       rect:
         serializedVersion: 2
-        x: 168
+        x: 152
         y: 0
-        width: 47
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -189,9 +189,9 @@ TextureImporter:
       name: Shot_2_2
       rect:
         serializedVersion: 2
-        x: 296
+        x: 280
         y: 0
-        width: 49
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -211,9 +211,9 @@ TextureImporter:
       name: Shot_2_3
       rect:
         serializedVersion: 2
-        x: 421
+        x: 408
         y: 0
-        width: 52
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -233,9 +233,9 @@ TextureImporter:
       name: Shot_2_4
       rect:
         serializedVersion: 2
-        x: 544
+        x: 536
         y: 0
-        width: 57
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -255,9 +255,9 @@ TextureImporter:
       name: Shot_2_5
       rect:
         serializedVersion: 2
-        x: 666
+        x: 664
         y: 0
-        width: 63
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -277,9 +277,9 @@ TextureImporter:
       name: Shot_2_6
       rect:
         serializedVersion: 2
-        x: 804
+        x: 792
         y: 0
-        width: 53
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -299,9 +299,9 @@ TextureImporter:
       name: Shot_2_7
       rect:
         serializedVersion: 2
-        x: 940
+        x: 920
         y: 0
-        width: 51
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -321,12 +321,12 @@ TextureImporter:
       name: Shot_2_8
       rect:
         serializedVersion: 2
-        x: 1068
+        x: 1058
         y: 0
-        width: 62
+        width: 72
         height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.36, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -343,12 +343,12 @@ TextureImporter:
       name: Shot_2_9
       rect:
         serializedVersion: 2
-        x: 1196
+        x: 1186
         y: 0
-        width: 62
+        width: 72
         height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.36, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -365,12 +365,12 @@ TextureImporter:
       name: Shot_2_10
       rect:
         serializedVersion: 2
-        x: 1324
+        x: 1305
         y: 0
-        width: 53
+        width: 72
         height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.46626452, y: 0.50000006}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -387,9 +387,9 @@ TextureImporter:
       name: Shot_2_11
       rect:
         serializedVersion: 2
-        x: 1444
+        x: 1434
         y: 0
-        width: 56
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -409,9 +409,9 @@ TextureImporter:
       name: Shot_2_12
       rect:
         serializedVersion: 2
-        x: 1572
+        x: 1562
         y: 0
-        width: 53
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -431,9 +431,9 @@ TextureImporter:
       name: Shot_2_13
       rect:
         serializedVersion: 2
-        x: 1699
+        x: 1689
         y: 0
-        width: 53
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -453,9 +453,9 @@ TextureImporter:
       name: Shot_2_14
       rect:
         serializedVersion: 2
-        x: 1827
+        x: 1817
         y: 0
-        width: 53
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

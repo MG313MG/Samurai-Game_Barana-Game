@@ -118,9 +118,9 @@ TextureImporter:
       name: Evasion_0
       rect:
         serializedVersion: 2
-        x: 43
+        x: 27
         y: 0
-        width: 41
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -140,9 +140,9 @@ TextureImporter:
       name: Evasion_1
       rect:
         serializedVersion: 2
-        x: 171
+        x: 154
         y: 0
-        width: 41
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -162,9 +162,9 @@ TextureImporter:
       name: Evasion_2
       rect:
         serializedVersion: 2
-        x: 297
+        x: 276
         y: 0
-        width: 42
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -184,10 +184,10 @@ TextureImporter:
       name: Evasion_3
       rect:
         serializedVersion: 2
-        x: 417
-        y: 2
-        width: 44
-        height: 126
+        x: 401
+        y: 0
+        width: 72
+        height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,9 +206,9 @@ TextureImporter:
       name: Evasion_4
       rect:
         serializedVersion: 2
-        x: 554
+        x: 539
         y: 0
-        width: 45
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -228,9 +228,9 @@ TextureImporter:
       name: Evasion_5
       rect:
         serializedVersion: 2
-        x: 683
+        x: 667
         y: 0
-        width: 45
+        width: 72
         height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
