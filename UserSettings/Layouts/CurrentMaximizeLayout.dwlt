@@ -97,7 +97,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 0
+    m_EnableMouseInput: 1
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -174,8 +174,8 @@ MonoBehaviour:
     y: 0
     width: 718.4
     height: 382.4
-  m_MinSize: {x: 201, y: 226}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 5}
   m_Panes:
   - {fileID: 5}
@@ -762,9 +762,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -2.254169, y: 4.5515203, z: -7.303199}
+    m_Target: {x: -6.043869, y: 1.1197091, z: -7.2596684}
     speed: 2
-    m_Value: {x: -2.0233219, y: 4.401751, z: -7.298548}
+    m_Value: {x: -6.043869, y: 1.1197091, z: -7.2596684}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -814,9 +814,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 10.80001
+    m_Target: 6.446603
     speed: 2
-    m_Value: 10.334937
+    m_Value: 6.446603
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -896,14 +896,14 @@ MonoBehaviour:
     - {fileID: -2021565001066434862, guid: f60c6f8a32f458a46955963556849084, type: 2}
     - {fileID: -4265771875917825917, guid: 77225367c5a1ab342babfded3ff1064f, type: 2}
     m_ValueSerializationHelper:
-    - e00: 0.6925798
+    - e00: 0.41582197
       e01: 0
       e02: 0
-      e03: 235.16379
+      e03: 222.35521
       e10: 0
-      e11: 0.6925798
+      e11: 0.41582197
       e12: 0
-      e13: 159.4531
+      e13: 91.45032
       e20: 0
       e21: 0
       e22: 1
@@ -912,14 +912,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 0.924364
+    - e00: 1.7603061
       e01: 0
       e02: 0
-      e03: 183.35638
+      e03: -186.71133
       e10: 0
-      e11: 0.924364
+      e11: 1.7603061
       e12: 0
-      e13: 199.9126
+      e13: 140.1518
       e20: 0
       e21: 0
       e22: 1
@@ -976,14 +976,14 @@ MonoBehaviour:
       e31: 0
       e32: 0
       e33: 1
-    - e00: 1
+    - e00: 1.2917593
       e01: 0
       e02: 0
-      e03: 0
+      e03: 285.51144
       e10: 0
-      e11: 1
+      e11: 1.2917593
       e12: 0
-      e13: 0
+      e13: 162.47556
       e20: 0
       e21: 0
       e22: 1
@@ -993,10 +993,10 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 6d3e836d08b7bcc45b70653a77a00a8b,
+  m_AnimatorController: {fileID: 9100000, guid: 77225367c5a1ab342babfded3ff1064f,
     type: 2}
   m_BreadCrumbs:
-  - m_Target: {fileID: 1107012092994159978, guid: 6d3e836d08b7bcc45b70653a77a00a8b,
+  - m_Target: {fileID: -4265771875917825917, guid: 77225367c5a1ab342babfded3ff1064f,
       type: 2}
     m_ScrollPosition: {x: 0, y: 0}
   stateMachineGraph: {fileID: 0}
@@ -1169,9 +1169,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 6e8dfeff0afbffff
+      m_SelectedIDs: c4f6ffff
+      m_LastClickedID: -2364
+      m_ExpandedIDs: aefaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1261,16 +1261,16 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SearchFilter:
     m_NameFilter: 
-    m_ClassNames: []
+    m_ClassNames:
+    - Prefab
     m_AssetLabels: []
     m_AssetBundleNames: []
     m_ReferencingInstanceIDs: 
     m_SceneHandles: 
     m_ShowAllHits: 0
     m_SkipHidden: 0
-    m_SearchArea: 1
-    m_Folders:
-    - Assets/Graphics/Pixel Arts/Enemies/Skeletons/Archer Skeleton
+    m_SearchArea: 0
+    m_Folders: []
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1278,18 +1278,18 @@ MonoBehaviour:
     m_ImportLogFlags: 0
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
-  m_StartGridSize: 52
+  m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Graphics/Pixel Arts/Enemies/Skeletons/Archer Skeleton
+  - Assets
   m_LastFoldersGridSize: 52
   m_LastProjectPath: E:\GitHub Unity Projects\Samurai-Game_Barana-Game
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d0df0000
-    m_LastClickedID: 57296
-    m_ExpandedIDs: 000000007ec3000080c300006ac50000c2df0000ccdf000000ca9a3b
+    m_SelectedIDs: 04ca9a3b
+    m_LastClickedID: 1000000004
+    m_ExpandedIDs: 00000000e8c40000eac4000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1318,7 +1318,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007ec3000080c3000082c3000084c30000
+    m_ExpandedIDs: 00000000e8c40000eac40000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1344,10 +1344,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: c4f6ffff
+    m_LastClickedInstanceID: -2364
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: dee2000070e400002ab50000d4b5000038b5000094bb0000f0cd0000d8b700004cd00000c6b80000dab300001cb4000006b40000c4bf00007eb50000f2b4000094b50000e6b4000000000000e0cd000022c7000064c7000040d7000028ce0000
+    m_ExpandedInstanceIDs: dee2000070e400002ab50000d4b5000038b5000094bb0000f0cd0000d8b700004cd00000c6b80000dab300001cb4000006b40000c4bf00007eb50000f2b4000094b50000e6b4000000000000e0cd000022c7000064c7000040d70000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1372,8 +1372,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 104.600006}
-    m_GridSize: 52
+    m_ScrollPosition: {x: 0, y: 1280.6}
+    m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 143.6
 --- !u!114 &14
