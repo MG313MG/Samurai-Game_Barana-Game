@@ -10,6 +10,8 @@ public class Arrow : MonoBehaviour {
 	[Header("Arrow")]
 	[SerializeField] private float Speed;
 	[SerializeField] private float xScale;
+	[SerializeField] private int Damage_to_Enemy;
+	[SerializeField] private bool Enemy_Damaged;
 	[Header("Face to")]
 	[SerializeField] private float FaceDir;
 
@@ -22,6 +24,8 @@ public class Arrow : MonoBehaviour {
 		Speed = sp.Acceleration_of_Arrow;
 		FaceDir = sp.Face;
 		xScale = transform.localScale.x;
+
+		Damage_to_Enemy = Mathf.RoundToInt(Speed * 3);
 
 		transform.localScale = new Vector2(FaceDir * xScale, transform.localScale.y);
 
@@ -41,17 +45,23 @@ public class Arrow : MonoBehaviour {
 	{
 		Destroy(gameObject);
 	}
-
-	private void Collisions()
-	{
-
-	}
-
+	
 	private IEnumerator Timer_for_Destroy()
 	{
 		yield return new WaitForSeconds(5);
 		Destroy_Arrow();
 	}
 
-	//private 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Enemy>() != null)
+		{
+			if (Enemy_Damaged)
+				return;
+
+			Enemy_Damaged = true;
+			collision.GetComponent<Enemy>().Health -= Damage_to_Enemy;
+			Destroy_Arrow();
+		}
+    }
 }
