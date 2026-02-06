@@ -21,11 +21,17 @@ public class SamuraiPlayer : MonoBehaviour {
 	public float Health;
 	public float Arrows;
 	public float Max_Arrows;
+	public float Damage_to_Enemy_with_Sword;
 	[SerializeField] private float Previous_Health;
 	[SerializeField] private float Speed;
-	[SerializeField] private float Stamina;
-	[SerializeField] private float Jump;
 	[SerializeField] private float xScale;
+	[SerializeField] private float Jump;
+	[Header("Stamina")]
+	[SerializeField] private float Stamina;
+    [SerializeField] private float Max_Stamina;
+    [SerializeField] private float Min_Stamina;
+	[SerializeField] private float Add_to_Stamina;
+	[SerializeField] private float Subtract_from_Stamina;
 	[Header("Face")] 
 	[SerializeField] private float FaceDir;
 	[SerializeField] private bool FaceRight;
@@ -61,6 +67,7 @@ public class SamuraiPlayer : MonoBehaviour {
 	[SerializeField] private float Level_of_Attaks;
 	[SerializeField] private float Charge_or_Fire_by_Bow;
 	[SerializeField] private float Timer_for_Charge_Bow;
+	
 
 	[Header("Publics")]
 	public float Acceleration_of_Arrow;
@@ -97,21 +104,33 @@ public class SamuraiPlayer : MonoBehaviour {
 
 	void Update ()
     {
-		Switch_On_Modes();
+        Switch_On_Modes();
 
         Set_Animations();
 
         Set_Face();
 
         Collisions();
-        
+
         Set_Samurai_Mode();
 
-		if (Previous_Health != Health && !isAttakingbySword)
-		{
-			Previous_Health = Health;
-			isHitting = true;
-		}
+        Handle_Stamina();
+    }
+
+    private void Handle_Stamina()
+    {
+        if (isRunning)
+        {
+            Stamina -= Time.deltaTime * Subtract_from_Stamina;
+        }
+        if (Stamina <= 0.3f)
+        {
+            isRunning = false;
+        }
+        if (Stamina < Max_Stamina && !isRunning && !isAttakingbySword && !isAttaking_byBow)
+        {
+            Stamina += Time.deltaTime * Add_to_Stamina;
+        }
     }
 
     private void Switch_On_Modes()
@@ -151,6 +170,16 @@ public class SamuraiPlayer : MonoBehaviour {
                 break;
             case Samurai_Modes.in_sky:
                 A_F_JIsF = 1;
+                if (isWalking)
+                {
+                    isWalking_was_true = true;
+                    isWalking = false;
+                }
+                if (isRunning)
+                {
+                    isRunning_was_true = true;
+                    isRunning = false;
+                }
                 break;
             case Samurai_Modes.falled:
                 A_F_JIsF = 2;
@@ -251,14 +280,15 @@ public class SamuraiPlayer : MonoBehaviour {
             Samurai_Mode = Samurai_Modes.walk;
         }
 		//Run
-		if (isGrounded && (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) && Input.GetKey(KeyCode.LeftControl) && Stamina != 0 && !isAttakingbySword && !isAttaking_byBow && !isJumping && !isHitting && !isDead)
+		if (isGrounded && (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A)) && Input.GetKey(KeyCode.LeftControl) && Stamina > Min_Stamina && !isAttakingbySword && !isAttaking_byBow && !isJumping && !isHitting && !isDead)
 		{
 			Samurai_Mode = Samurai_Modes.run;
 		}
 		//Jump_In Sky_Fall
-		if (Input.GetKeyDown(KeyCode.Space) && Can_Jumping > 0 && !isAttakingbySword && !isAttaking_byBow && !isHitting && !isDead) 
+		if (Input.GetKeyDown(KeyCode.Space) && Can_Jumping > 0 && !isAttakingbySword && !isAttaking_byBow && !isHitting && !isDead && Stamina >Min_Stamina) 
 		{
 			Samurai_Mode = Samurai_Modes.jump;
+			Stamina -= Subtract_from_Stamina / 2;
 			rb.linearVelocity = new Vector2(rb.linearVelocity.x, Jump);
 			StartCoroutine(Enum_Timer_for_Samurai(IEnumerator_Timer_for_Samurai.timer_to_minus_1_from_jump));
 			//Can_Jumping -= 1;
@@ -284,12 +314,11 @@ public class SamuraiPlayer : MonoBehaviour {
 			Samurai_Mode = Samurai_Modes.jump;
 		if (rb.linearVelocity.y <= 0.3 && !isGrounded)
 			Samurai_Mode = Samurai_Modes.in_sky;
-		if (isGrounded && isJumping)
-			Samurai_Mode = Samurai_Modes.falled;
+		
 		if (!isGrounded && (Input.GetKey(KeyCode.D) || (Input.GetKey(KeyCode.A))))
 		{
 			if (isRunning_was_true)
-				Speed = 3;
+				Speed = 3.5f;
 			else
 				Speed = 3;
 			rb.linearVelocity = new Vector2(Speed * 2 * FaceDir, rb.linearVelocity.y);
@@ -306,10 +335,16 @@ public class SamuraiPlayer : MonoBehaviour {
 		}
         if (Input.GetMouseButtonUp(1))
 		{
+			Stamina -= Subtract_from_Stamina * 2;
 			Samurai_Mode = Samurai_Modes.Spawn_Arrow;
 		}
-		//Hit
-		if (isHitting)
+        //Hit
+        if (Previous_Health != Health && !isAttakingbySword)
+        {
+            Previous_Health = Health;
+            isHitting = true;
+        }
+        if (isHitting)
 			Samurai_Mode = Samurai_Modes.hurt;
 		//Go Back
 		if (isGobackking)
@@ -388,7 +423,7 @@ public class SamuraiPlayer : MonoBehaviour {
 				Can_Jumping -= 1;
                 break;
 			case IEnumerator_Timer_for_Samurai.timer_for_false_ishitting:
-				yield return new WaitForSeconds(0.5f);
+				yield return new WaitForSeconds(0.3f);
 				isHitting = false;
                 isCanDamagging = true;
 				yield return new WaitForSeconds(1);
@@ -414,7 +449,7 @@ public class SamuraiPlayer : MonoBehaviour {
 		{
 			if (!isEnemyDamagged && isAttakingbySword)
 			{
-				collision.GetComponent<Enemy>().Health -= 10;
+				collision.GetComponent<Enemy>().Health -= Damage_to_Enemy_with_Sword;
 				isEnemyDamagged = true;
 			}
 		}

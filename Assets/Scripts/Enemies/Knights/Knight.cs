@@ -1,18 +1,17 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public enum Skeleton_with_Sword_Modes {idle, walk, run, attak, hurt, dead };
+public enum Knight_Modes { idle, walk, run, attak, hurt, dead };
 
-public enum Timer_for_Skeleton_with_Sword { idle_timer, attak_timer, hurt_timer, dead_timer};
+public enum Timer_for_Knight { idle_timer, attak_timer, hurt_timer, dead_timer };
 
-public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
+public class Knight : MonoBehaviour, Death_and_Hurt_Handler, Defend_Handler, Change_Face
 {
     private Animator anim;
     private Rigidbody2D rb;
     private SamuraiPlayer sp;
 
-    public Skeleton_with_Sword_Modes Skeleton_with_Sword_Mode;
+    public Knight_Modes Knight_Mode;
 
     [Header("Spearer Skeleton")]
     [SerializeField] private float Speed;
@@ -32,6 +31,7 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
     //floats
     [SerializeField] private float A_idle_Walk;
     [SerializeField] private float A_Level_of_Attaks;
+    [SerializeField] private float A_Hurt_or_Defend;
     //ints
     [SerializeField] private int rnd_idle;
     [SerializeField] private int rnd_attaks;
@@ -62,7 +62,12 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
 
     private float timer_to_add_level_of_attak;
 
+    private bool is_Defending;
 
+
+
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -72,6 +77,7 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
         xScale = transform.localScale.x;
     }
 
+    // Update is called once per frame
     void Update()
     {
         Change_Modes();
@@ -87,24 +93,24 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
 
     private void Change_Modes()
     {
-        switch (Skeleton_with_Sword_Mode)
+        switch (Knight_Mode)
         {
-            case Skeleton_with_Sword_Modes.idle:
+            case Knight_Modes.idle:
                 A_idle_Walk = 0;
-                StartCoroutine(Timer_for_Spearer_Skeleton_Modes(Timer_for_Skeleton_with_Sword.idle_timer));
+                StartCoroutine(Timer_for_Knight_Modes(Timer_for_Knight.idle_timer));
                 break;
-            case Skeleton_with_Sword_Modes.walk:
+            case Knight_Modes.walk:
                 A_idle_Walk = 1;
                 Speed = 3;
                 rb.linearVelocity = new Vector2(Speed * FaceDir, rb.linearVelocity.y);
                 break;
-            case Skeleton_with_Sword_Modes.run:
+            case Knight_Modes.run:
                 //isRunning = true;
                 A_idle_Walk = 2;
                 Speed = 6;
                 rb.linearVelocity = new Vector2(Speed * FaceDir, rb.linearVelocity.y);
                 break;
-            case Skeleton_with_Sword_Modes.attak:
+            case Knight_Modes.attak:
                 isRunning = false;
                 timer_to_add_level_of_attak += Time.deltaTime;
                 if (timer_to_add_level_of_attak >= 1.1)
@@ -115,12 +121,16 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
                 if (A_Level_of_Attaks == 4)
                     A_Level_of_Attaks = 0;
                 break;
-            case Skeleton_with_Sword_Modes.hurt:
-                StartCoroutine(Timer_for_Spearer_Skeleton_Modes(Timer_for_Skeleton_with_Sword.hurt_timer));
+            case Knight_Modes.hurt:
+                if (is_Defending)
+                    A_Hurt_or_Defend = 1;
+                else
+                    A_Hurt_or_Defend = 0;
+                StartCoroutine(Timer_for_Knight_Modes(Timer_for_Knight.hurt_timer));
                 break;
-            case Skeleton_with_Sword_Modes.dead:
+            case Knight_Modes.dead:
                 is_Dead = true;
-                StartCoroutine(Timer_for_Spearer_Skeleton_Modes(Timer_for_Skeleton_with_Sword.dead_timer));
+                StartCoroutine(Timer_for_Knight_Modes(Timer_for_Knight.dead_timer));
                 break;
         }
     }
@@ -131,12 +141,12 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
         if (rnd_idle == 2)
         {
             is_idle_Mode = true;
-            Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.idle;
+            Knight_Mode = Knight_Modes.idle;
         }
         //walk
         if (!is_idle_Mode && !isRunning && !is_Attaking_by_Sword && !is_Dead && !is_Hurt)
         {
-            Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.walk;
+            Knight_Mode = Knight_Modes.walk;
         }
         //chande face
         if (isWalledForward)
@@ -150,11 +160,11 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
             if (Distance_from_Player <= 2)
             {
                 is_Attaking_by_Sword = true;
-                Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.attak;
+                Knight_Mode = Knight_Modes.attak;
             }
             else
             {
-                Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.run;
+                Knight_Mode = Knight_Modes.run;
                 isRunning = true;
             }
         }
@@ -170,6 +180,7 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
         //floats
         anim.SetFloat("idle_Walk", A_idle_Walk);
         anim.SetFloat("Level_of_Attaks", A_Level_of_Attaks);
+        anim.SetFloat("Hurt_or_Defend", A_Hurt_or_Defend);
         //bools
         anim.SetBool("is_Hurt", is_Hurt);
         anim.SetBool("is_Dead", is_Dead);
@@ -182,7 +193,7 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
             if (isWalled || !isGroundedForward)
             {
                 FaceRight = !FaceRight;
-                Player_CheckDistance = 7;
+                Player_CheckDistance = 10;
                 rnd_idle = Random.Range(1, 6);
             }
 
@@ -199,16 +210,24 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
         if (!is_Dead)
         {
             is_Hurt = true;
-            Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.hurt;
+            Knight_Mode = Knight_Modes.hurt;
         }
     }
-
-    public void OnDeath()
+    public void OnDefend()
     {
-        Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.dead;
+        is_Hurt = true;
+        is_Defending = true;
+        Knight_Mode = Knight_Modes.hurt;
     }
 
-    
+    public void OnChangeFace()
+    {
+        FaceRight = !FaceRight;
+    }
+    public void OnDeath()
+    {
+        Knight_Mode = Knight_Modes.dead;
+    }
 
     private void Handle_Collisions()
     {
@@ -219,20 +238,20 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
         isWalled = Physics2D.Raycast(Y_Position.transform.position, Vector2.right * FaceDir, Wall_CheckDistance, Wall_Layer);
     }
 
-    private IEnumerator Timer_for_Spearer_Skeleton_Modes(Timer_for_Skeleton_with_Sword Skeleton_with_Sword_Timer)
+    private IEnumerator Timer_for_Knight_Modes(Timer_for_Knight Knight_Timer)
     {
-        switch (Skeleton_with_Sword_Timer)
+        switch (Knight_Timer)
         {
-            case Timer_for_Skeleton_with_Sword.idle_timer:
+            case Timer_for_Knight.idle_timer:
                 yield return new WaitForSeconds(2);
                 is_idle_Mode = false;
                 rnd_idle = 1;
                 break;
-            case Timer_for_Skeleton_with_Sword.dead_timer:
+            case Timer_for_Knight.dead_timer:
                 yield return new WaitForSeconds(0.5f);
                 Destroy(gameObject);
                 break;
-            case Timer_for_Skeleton_with_Sword.hurt_timer:
+            case Timer_for_Knight.hurt_timer:
                 yield return new WaitForSeconds(0.7f);
                 is_Hurt = false;
                 break;
@@ -241,10 +260,10 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<SamuraiPlayer>() != null && collision.GetComponent<SamuraiPlayer>().isHittinged == false)
+        if (collision.GetComponent<SamuraiPlayer>() != null && collision.GetComponent<SamuraiPlayer>().isHitting == false && is_Attaking_by_Sword)
         {
-                collision.GetComponent<SamuraiPlayer>().Health -= 7;
-                //collision.GetComponent<SamuraiPlayer>().isHitting = true;
+            collision.GetComponent<SamuraiPlayer>().Health -= 10;
+            //collision.GetComponent<SamuraiPlayer>().isHitting = true;
         }
     }
 

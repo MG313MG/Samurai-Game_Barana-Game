@@ -25,7 +25,7 @@ public class Arrow : MonoBehaviour {
 		FaceDir = sp.Face;
 		xScale = transform.localScale.x;
 
-		Damage_to_Enemy = Mathf.RoundToInt(Speed * 3);
+		Damage_to_Enemy = Mathf.RoundToInt(Speed * 1.5f);
 
 		transform.localScale = new Vector2(FaceDir * xScale, transform.localScale.y);
 
@@ -60,7 +60,8 @@ public class Arrow : MonoBehaviour {
 				return;
 
 			Enemy_Damaged = true;
-			collision.GetComponent<Enemy>().Health -= Damage_to_Enemy;
+			collision.GetComponent<Enemy>().isDamaged_by_Arrow = true;
+            collision.GetComponent<Enemy>().Health -= Damage_to_Enemy;
 			Destroy_Arrow();
 		}
     }
