@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
 
     Change_Face change_face;
 
+    Show_and_Hide show_and_hide;
+
     [Header("Enemy")]
     public float Health;
     public bool isDamaged_by_Arrow;
@@ -22,6 +24,7 @@ public class Enemy : MonoBehaviour
     //bools
     [SerializeField] private bool isPlayer_Back;
     [SerializeField] private bool isHitted;
+    public bool isDefending;
     private bool isrnd_Selected;
     //layers
     [SerializeField] private LayerMask Player_Layer;
@@ -34,6 +37,7 @@ public class Enemy : MonoBehaviour
         death_and_hurt_handler = GetComponent<Death_and_Hurt_Handler>();
         defend_handler = GetComponent<Defend_Handler>();
         change_face = GetComponent<Change_Face>();
+        show_and_hide = GetComponent<Show_and_Hide>();
         Previous_Health = Health;
     }
 
@@ -48,6 +52,11 @@ public class Enemy : MonoBehaviour
 
         if (Health != Previous_Health && Health > 0)
         {
+            if (show_and_hide != null)
+            {
+                show_and_hide.Show();
+                StartCoroutine(Hide_Health_Bar());
+            }
             isHitted = true;
             StartCoroutine(False_is_Hitted());
             if (change_face != null && isHitted && isPlayer_Back)
@@ -58,11 +67,15 @@ public class Enemy : MonoBehaviour
             {
                 rnd_Hurt_or_Defend = Random.Range(1, 4);
                 if (rnd_Hurt_or_Defend == 2)
+                {
+                    isDefending = true;
                     defend_handler.OnDefend();
-                else
+                    StartCoroutine(False_is_Hitted());
+                }
+                else if (!isDefending)
                     death_and_hurt_handler.OnHurt();
             }
-            else if (death_and_hurt_handler != null)
+            else if (death_and_hurt_handler != null && !isDefending)
                     {
                         death_and_hurt_handler.OnHurt();
                     }
@@ -76,6 +89,7 @@ public class Enemy : MonoBehaviour
             if (death_and_hurt_handler != null)
             {
                 death_and_hurt_handler.OnDeath();
+                show_and_hide.Hide();
             }
         }
     }
@@ -85,6 +99,12 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(1);
         isDamaged_by_Arrow = false;
         isHitted = false;
+        isDefending = false;
+    }
+    private IEnumerator Hide_Health_Bar()
+    {
+        yield return new WaitForSeconds(5);
+        show_and_hide.Hide();
     }
 
     private void OnDrawGizmos()

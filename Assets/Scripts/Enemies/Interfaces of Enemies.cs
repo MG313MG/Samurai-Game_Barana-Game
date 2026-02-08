@@ -14,3 +14,9 @@ public interface Change_Face
 {
     void OnChangeFace();
 }
+public interface Show_and_Hide
+{
+    void Show();
+
+    void Hide();
+}

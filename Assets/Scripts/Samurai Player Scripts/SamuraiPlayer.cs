@@ -41,14 +41,18 @@ public class SamuraiPlayer : MonoBehaviour {
 	[SerializeField] private float A_F_JIsF;
 	[Header("Check Distances")]
 	[SerializeField] private float GrondCheckDistance;
+	[SerializeField] private float Enemy_Chack_Distance;
 	[Header("Layers")]
 	[SerializeField] private LayerMask Layer_Ground;
+	[SerializeField] private LayerMask Enemy_Layer;
 	[Header("Collisions")]
 	[SerializeField] private bool isGrounded;
 	[Header("Game Objects")]
+	[SerializeField] private GameObject Y_Position;
 	[SerializeField] private GameObject Arrow;
 	[SerializeField] private GameObject Point_of_Spawn_Arrow;
 	[Header("Bool of Modes")]
+	[SerializeField] private bool is_Enemy_Forward;
 	[SerializeField] private bool isWalking;
     [SerializeField] private bool isWalking_was_true;
 	[SerializeField] private bool isRunning;
@@ -373,6 +377,7 @@ public class SamuraiPlayer : MonoBehaviour {
 
 	private void Collisions()
 	{
+		is_Enemy_Forward = Physics2D.Raycast(Y_Position.transform.position, Vector2.right * FaceDir, Enemy_Chack_Distance, Enemy_Layer);
 		isGrounded = Physics2D.Raycast(transform.position, Vector2.down, GrondCheckDistance, Layer_Ground);
 	}
 
@@ -443,9 +448,9 @@ public class SamuraiPlayer : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision == null) return;
+		if (collision == null) return;
 
-		else if (collision.GetComponent<Enemy>() != null)
+		else if (collision.GetComponent<Enemy>() != null && isAttakingbySword && is_Enemy_Forward && collision.GetComponent<Enemy>().isDefending == false)
 		{
 			if (!isEnemyDamagged && isAttakingbySword)
 			{
@@ -458,7 +463,8 @@ public class SamuraiPlayer : MonoBehaviour {
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - GrondCheckDistance, transform.position.z));
-
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - GrondCheckDistance));
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine(Y_Position.transform.position, new Vector2(Y_Position.transform.position.x + (Enemy_Chack_Distance * FaceDir), Y_Position.transform.position.y));
     }
 }

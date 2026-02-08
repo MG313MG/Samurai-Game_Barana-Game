@@ -223,6 +223,7 @@ public class Knight : MonoBehaviour, Death_and_Hurt_Handler, Defend_Handler, Cha
     public void OnChangeFace()
     {
         FaceRight = !FaceRight;
+        Player_CheckDistance = 10;
     }
     public void OnDeath()
     {

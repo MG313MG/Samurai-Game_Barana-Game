@@ -194,6 +194,7 @@ public class CastleKnight : MonoBehaviour, Death_and_Hurt_Handler, Change_Face
     public void OnChangeFace()
     {
         FaceRight = !FaceRight;
+        Player_CheckDistance = 12;
     }
     public void OnDeath()
     {
