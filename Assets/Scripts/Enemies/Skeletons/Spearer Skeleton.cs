@@ -217,7 +217,7 @@ public class SpearerSkeleton : MonoBehaviour, Death_and_Hurt_Handler
                 rnd_idle = 1;
                 break;
             case Timer_for_Spearer_Skeleton.dead_timer:
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.35f);
                 Destroy(gameObject);
                 break;
             case Timer_for_Spearer_Skeleton.hurt_timer:
@@ -229,7 +229,7 @@ public class SpearerSkeleton : MonoBehaviour, Death_and_Hurt_Handler
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<SamuraiPlayer>() != null && collision.GetComponent<SamuraiPlayer>().isHittinged == false)
+        if (collision.GetComponent<SamuraiPlayer>() != null && collision.GetComponent<SamuraiPlayer>().isHittinged == false && is_Attaking_by_Spear)
         {
                 collision.GetComponent<SamuraiPlayer>().Health -= 5;
                 //collision.GetComponent<SamuraiPlayer>().isHitting = true;

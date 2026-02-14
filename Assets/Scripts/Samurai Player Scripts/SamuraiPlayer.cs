@@ -343,7 +343,7 @@ public class SamuraiPlayer : MonoBehaviour {
 			Samurai_Mode = Samurai_Modes.Spawn_Arrow;
 		}
         //Hit
-        if (Previous_Health != Health && !isAttakingbySword)
+        if (Previous_Health != Health && !isAttakingbySword && Health > 0)
         {
             Previous_Health = Health;
             isHitting = true;
@@ -367,12 +367,14 @@ public class SamuraiPlayer : MonoBehaviour {
 		anim.SetFloat("Attak_level", Level_of_Attaks);
 		anim.SetFloat("Charge_or_Fire_by_Bow", Charge_or_Fire_by_Bow);
 		//bools
+		anim.SetBool("isDead", isDead);
+		if (isDead)
+			return;
 		anim.SetBool("isJumping", isJumping);
 		anim.SetBool("isAttaking_bySword",isAttakingbySword);
 		anim.SetBool("isAttaking_byBow", isAttaking_byBow);
 		anim.SetBool("isHitting", isHitting);
         anim.SetBool("isGoBacking", isGobackking);
-		anim.SetBool("isDead", isDead);
     }
 
 	private void Collisions()
@@ -440,7 +442,7 @@ public class SamuraiPlayer : MonoBehaviour {
 				isCanGoBackking = true;
 				break;
 			case IEnumerator_Timer_for_Samurai.timer_for_dead:
-				yield return new WaitForSeconds(1);
+				yield return new WaitForSeconds(0.5f);
 				gameObject.SetActive(false);
 				break;
         }

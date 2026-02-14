@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour
 {
-    public Transform target; // ???? ?? ????? ?????
+    public Transform target;
     public float smoothSpeed;
 
     void LateUpdate()
@@ -10,7 +10,7 @@ public class MainCamera : MonoBehaviour
         if (target == null) return;
 
         Vector3 targetPosition = target.position;
-        targetPosition.z = transform.position.z; // ??? ?? ????? ???
+        targetPosition.z = transform.position.z;
 
         transform.position = Vector3.Lerp(
             transform.position,

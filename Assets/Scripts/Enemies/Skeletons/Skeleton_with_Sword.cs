@@ -241,7 +241,7 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<SamuraiPlayer>() != null && collision.GetComponent<SamuraiPlayer>().isHittinged == false)
+        if (collision.GetComponent<SamuraiPlayer>() != null && collision.GetComponent<SamuraiPlayer>().isHittinged == false && is_Attaking_by_Sword)
         {
                 collision.GetComponent<SamuraiPlayer>().Health -= 7;
                 //collision.GetComponent<SamuraiPlayer>().isHitting = true;

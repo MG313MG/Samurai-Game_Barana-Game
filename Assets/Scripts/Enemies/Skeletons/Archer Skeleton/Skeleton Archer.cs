@@ -167,7 +167,7 @@ public class Skeleton_Archer : MonoBehaviour, Death_and_Hurt_Handler
             is_idle_Mode = true;
             Archer_Skeleton_Mode = Archer_Skeleton_Modes.idle;
         }
-        //check player to evosion,shot and attak by knife
+        //check player to evosion,shot
         if (isPlayer && !is_Hurt && !is_Dead)
         {
             is_Player_was_true = true;
@@ -182,6 +182,8 @@ public class Skeleton_Archer : MonoBehaviour, Death_and_Hurt_Handler
             if (Distance_from_Player <= 11)
             {
                 if (is_shot_Mode) 
+                    return;
+                if (isPlayer)
                     return;
 
                 is_shot_Mode = true;
