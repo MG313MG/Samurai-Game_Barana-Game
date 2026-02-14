@@ -101,7 +101,7 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
             case Skeleton_with_Sword_Modes.run:
                 //isRunning = true;
                 A_idle_Walk = 2;
-                Speed = 6;
+                Speed = 5;
                 rb.linearVelocity = new Vector2(Speed * FaceDir, rb.linearVelocity.y);
                 break;
             case Skeleton_with_Sword_Modes.attak:

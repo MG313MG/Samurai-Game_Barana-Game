@@ -101,7 +101,7 @@ public class Skeleton_Archer : MonoBehaviour, Death_and_Hurt_Handler
                 StartCoroutine(Timer_for_Archer_Skeleton_Modes(Archer_Skeleton_Timer.idle_timer));
                 break;
             case Archer_Skeleton_Modes.walk:
-                Speed = 2;
+                Speed = 3;
                 rb.linearVelocity = new Vector2(Speed * FaceDir, rb.linearVelocity.y);
                 A_idle_Walk = 1;
                 break;
@@ -111,7 +111,7 @@ public class Skeleton_Archer : MonoBehaviour, Death_and_Hurt_Handler
                 rb.linearVelocity = new Vector2(Speed * FaceDir, rb.linearVelocity.y);
                 break;
             case Archer_Skeleton_Modes.evosion:
-                Speed = 2.5f;
+                Speed = 3f;
                 is_shot_Mode = false;
                 rb.linearVelocity = new Vector2(Speed * FaceDir, rb.linearVelocity.y);
                 break;
@@ -182,8 +182,6 @@ public class Skeleton_Archer : MonoBehaviour, Death_and_Hurt_Handler
             if (Distance_from_Player <= 11)
             {
                 if (is_shot_Mode) 
-                    return;
-                if (isPlayer)
                     return;
 
                 is_shot_Mode = true;
