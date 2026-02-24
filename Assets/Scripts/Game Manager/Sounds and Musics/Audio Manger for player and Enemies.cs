@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public enum Sounds {jump, evosion, attak_by_sword_1, attak_by_sword_2, attak_by_sword_3, load_bow, attak_by_bow, defend, hit, dead }
 
@@ -20,6 +21,9 @@ public class Audio_Manger_for_player_and_Enemies : MonoBehaviour
     [Space(15)]
     [Range(0f, 1f)]
     public float Valume;
+
+    private bool Hurt_sound_palyed;
+    private bool Dead_sound_palyed;
 
 
     private void Start()
@@ -72,15 +76,25 @@ public class Audio_Manger_for_player_and_Enemies : MonoBehaviour
                 audio_source.PlayOneShot(Defend);
                 break;
             case Sounds.hit:
-                audio_source.PlayOneShot(hit);
+                if (!Hurt_sound_palyed)
+                    audio_source.PlayOneShot(hit);
+                Hurt_sound_palyed = true;
+                StartCoroutine(Hurt_sound_played_Set_True());
                 break;
             case Sounds.dead:
-                audio_source.PlayOneShot(dead);
+                if (!Dead_sound_palyed)
+                    audio_source.PlayOneShot(dead);
+                Dead_sound_palyed = true;
                 break;
         }
     }
     public void Stop_Sounds()
     {
         audio_source.Stop();
+    }
+    private IEnumerator Hurt_sound_played_Set_True()
+    {
+        yield return new WaitForSeconds(2);
+        Hurt_sound_palyed = false;
     }
 }
