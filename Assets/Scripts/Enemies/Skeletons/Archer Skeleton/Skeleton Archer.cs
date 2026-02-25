@@ -159,17 +159,23 @@ public class Skeleton_Archer : MonoBehaviour, Death_and_Hurt_Handler
     private void Change_Modes()
     {
         //walk
-        if (!is_idle_Mode && !is_evosion_Mode && !is_shot_Mode && !is_Player_was_true && !is_Hurt && !is_Dead)
+        if (!is_idle_Mode && !is_evosion_Mode && !is_shot_Mode && !is_Player_was_true)
+            if (is_Hurt || is_Dead)
+                return;
             Archer_Skeleton_Mode = Archer_Skeleton_Modes.walk;
         //idle
         if (rnd_idle == 2)
         {
+            if (is_Hurt || is_Dead)
+                return;
             is_idle_Mode = true;
             Archer_Skeleton_Mode = Archer_Skeleton_Modes.idle;
         }
         //check player to evosion,shot
-        if (isPlayer && !is_Hurt && !is_Dead)
+        if (isPlayer)
         {
+            if (is_Hurt || is_Dead)
+                return;
             is_Player_was_true = true;
             Distance_from_Player = Mathf.Abs(transform.position.x - sp.transform.position.x);
 

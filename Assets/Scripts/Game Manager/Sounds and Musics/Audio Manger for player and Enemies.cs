@@ -51,8 +51,7 @@ public class Audio_Manger_for_player_and_Enemies : MonoBehaviour
         switch (sound)
         {
             case Sounds.jump:
-                audio_source.clip = Jump;
-                audio_source.Play();
+                audio_source.PlayOneShot(Jump);
                 break;
             case Sounds.evosion:
                 audio_source.PlayOneShot(Evosion);
