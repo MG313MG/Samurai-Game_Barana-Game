@@ -130,12 +130,16 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
         //idle
         if (rnd_idle == 2)
         {
+            if (is_Dead || is_Hurt)
+                return;
             is_idle_Mode = true;
             Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.idle;
         }
         //walk
-        if (!is_idle_Mode && !isRunning && !is_Attaking_by_Sword && !is_Dead && !is_Hurt)
+        if (!is_idle_Mode && !isRunning && !is_Attaking_by_Sword)
         {
+            if (is_Dead || is_Hurt)
+                return;
             Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.walk;
         }
         //chande face
@@ -144,8 +148,10 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
             Player_CheckDistance -= Time.deltaTime * 10;
         }
         //run and attak
-        if (isPlayer && !is_Hurt && !is_Dead)
+        if (isPlayer)
         {
+            if (is_Dead || is_Hurt)
+                return;
             Distance_from_Player = Mathf.Abs(transform.position.x - sp.transform.position.x);
             if (Distance_from_Player <= 2)
             {
@@ -208,8 +214,6 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
         Skeleton_with_Sword_Mode = Skeleton_with_Sword_Modes.dead;
     }
 
-    
-
     private void Handle_Collisions()
     {
         isPlayer = Physics2D.Raycast(Y_Position.transform.position, Vector2.right * FaceDir, Player_CheckDistance, Player_Layer);
@@ -229,11 +233,11 @@ public class Skeleton_with_Sword : MonoBehaviour, Death_and_Hurt_Handler
                 rnd_idle = 1;
                 break;
             case Timer_for_Skeleton_with_Sword.dead_timer:
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.35f);
                 Destroy(gameObject);
                 break;
             case Timer_for_Skeleton_with_Sword.hurt_timer:
-                yield return new WaitForSeconds(0.7f);
+                yield return new WaitForSeconds(0.3f);
                 is_Hurt = false;
                 break;
         }

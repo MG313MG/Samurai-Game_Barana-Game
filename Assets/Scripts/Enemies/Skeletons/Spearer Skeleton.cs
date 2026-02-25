@@ -12,7 +12,7 @@ public class SpearerSkeleton : MonoBehaviour, Death_and_Hurt_Handler
     private Rigidbody2D rb;
     private SamuraiPlayer sp;
 
-    private Spearer_Skeleton_Modes Spearer_Skeleton_Mode;
+    public Spearer_Skeleton_Modes Spearer_Skeleton_Mode;
 
     [Header("Spearer Skeleton")]
     [SerializeField] private float Speed;
@@ -74,6 +74,65 @@ public class SpearerSkeleton : MonoBehaviour, Death_and_Hurt_Handler
 
     void Update()
     {
+        Switch_On_Modes();
+        
+        Set_Modes();
+
+        Handle_Animations();
+
+        Set_Face();
+
+        Handle_Collisions();
+    }
+
+    private void Set_Modes()
+    {
+        //idle
+        if (rnd_idle == 2)
+        {
+            if (is_Hurt || is_Dead)
+                return;
+            is_idle_Mode = true;
+            Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.idle;
+        }
+        //walk
+        if (!is_idle_Mode && !isRunning && !is_Attaking_by_Spear)
+        {
+            if (is_Hurt || is_Dead)
+                return;
+            Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.walk;
+        }
+
+        if (isWalledForward)
+        {
+            Player_CheckDistance -= Time.deltaTime * 10;
+        }
+        //run and attak
+        if (isPlayer)
+        {
+            if (is_Hurt || is_Dead)
+                return;
+            Distance_from_Player = Mathf.Abs(transform.position.x - sp.transform.position.x);
+            if (Distance_from_Player <= 1.6)
+            {
+                is_Attaking_by_Spear = true;
+                Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.attak;
+            }
+            else
+            {
+                isRunning = true;
+                Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.run;
+            }
+        }
+        else
+        {
+            is_Attaking_by_Spear = false;
+            isRunning = false;
+        }
+    }
+
+    private void Switch_On_Modes()
+    {
         switch (Spearer_Skeleton_Mode)
         {
             case Spearer_Skeleton_Modes.idle:
@@ -94,63 +153,24 @@ public class SpearerSkeleton : MonoBehaviour, Death_and_Hurt_Handler
             case Spearer_Skeleton_Modes.attak:
                 isRunning = false;
                 timer_to_add_level_of_attak += Time.deltaTime;
-                if(timer_to_add_level_of_attak >= 1.1)
+                if (timer_to_add_level_of_attak >= 1.1)
                 {
                     timer_to_add_level_of_attak = 0;
                     A_Level_of_Attaks += 1;
                 }
                 if (A_Level_of_Attaks == 2)
-                        A_Level_of_Attaks = 0;
+                    A_Level_of_Attaks = 0;
                 break;
             case Spearer_Skeleton_Modes.hurt:
                 StartCoroutine(Timer_for_Spearer_Skeleton_Modes(Timer_for_Spearer_Skeleton.hurt_timer));
                 break;
             case Spearer_Skeleton_Modes.dead:
-                is_Dead = true;
+                is_Hurt = false;
+                if (!is_Dead)
+                    is_Dead = true;
                 StartCoroutine(Timer_for_Spearer_Skeleton_Modes(Timer_for_Spearer_Skeleton.dead_timer));
                 break;
         }
-
-        if (rnd_idle == 2)
-        {
-            is_idle_Mode = true;
-            Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.idle;
-        }
-        if (!is_idle_Mode && !isRunning && !is_Attaking_by_Spear && !is_Dead && !is_Hurt)
-        {
-            Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.walk;
-        }
-
-        if (isWalledForward)
-        {
-            Player_CheckDistance -= Time.deltaTime * 10;
-        }
-
-        if (isPlayer && !is_Hurt && !is_Dead)
-        {
-            Distance_from_Player = Mathf.Abs(transform.position.x - sp.transform.position.x);
-            if (Distance_from_Player <= 1.6)
-            {
-                is_Attaking_by_Spear = true;
-                Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.attak;
-            }
-            else
-            {
-                Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.run;
-                isRunning = true;
-            }
-        }
-        else
-        {
-            is_Attaking_by_Spear = false;
-            isRunning = false;
-        }
-
-        Handle_Animations();
-
-        Set_Face();
-
-        Handle_Collisions();
     }
 
     private void Handle_Animations()
@@ -196,8 +216,6 @@ public class SpearerSkeleton : MonoBehaviour, Death_and_Hurt_Handler
         Spearer_Skeleton_Mode = Spearer_Skeleton_Modes.dead;
     }
 
-    
-
     private void Handle_Collisions()
     {
         isPlayer = Physics2D.Raycast(Y_Position.transform.position, Vector2.right * FaceDir, Player_CheckDistance, Player_Layer);
@@ -216,13 +234,13 @@ public class SpearerSkeleton : MonoBehaviour, Death_and_Hurt_Handler
                 is_idle_Mode = false;
                 rnd_idle = 1;
                 break;
-            case Timer_for_Spearer_Skeleton.dead_timer:
-                yield return new WaitForSeconds(0.35f);
-                Destroy(gameObject);
-                break;
             case Timer_for_Spearer_Skeleton.hurt_timer:
-                yield return new WaitForSeconds(0.7f);
+                yield return new WaitForSeconds(0.3f);
                 is_Hurt = false;
+                break;
+            case Timer_for_Spearer_Skeleton.dead_timer:
+                yield return new WaitForSeconds(0.27f);
+                Destroy(gameObject);
                 break;
         }
     }
