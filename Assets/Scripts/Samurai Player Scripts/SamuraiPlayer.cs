@@ -463,7 +463,7 @@ public class SamuraiPlayer : MonoBehaviour {
 				isCanGoBackking = true;
 				break;
 			case IEnumerator_Timer_for_Samurai.timer_for_dead:
-				yield return new WaitForSeconds(0.5f);
+				yield return new WaitForSeconds(0.4f);
 				gameObject.SetActive(false);
 				break;
         }
